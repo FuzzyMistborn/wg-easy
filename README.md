@@ -4,6 +4,7 @@
 [![Lint](https://github.com/FuzzyMistborn/wg-easy/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/FuzzyMistborn/wg-easy/actions/workflows/lint.yml)
 [![Docker](https://img.shields.io/docker/v/fuzzymistborn/wg-easy/latest)](https://hub.docker.com/r/fuzzymistborn/wg-easy)
 [![Docker](https://img.shields.io/docker/pulls/fuzzymistborn/wg-easy.svg)](https://hub.docker.com/r/fuzzymistborn/wg-easy)
+[![Sponsor](https://img.shields.io/github/sponsors/weejewel)](https://github.com/sponsors/WeeJeWel)
 
 You have found the easiest way to install & manage WireGuard on any Linux host!
 
