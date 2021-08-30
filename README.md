@@ -1,12 +1,13 @@
 # WireGuard Easy
 
 [![Build & Publish Docker Image to Docker Hub](https://github.com/WeeJeWel/wg-easy/actions/workflows/deploy.yml/badge.svg?branch=production)](https://github.com/WeeJeWel/wg-easy/actions/workflows/deploy.yml)
-[![Lint](https://github.com/WeeJeWel/wg-easy/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/WeeJeWel/wg-easy/actions/workflows/lint.yml)
-[![Docker](https://img.shields.io/docker/v/weejewel/wg-easy/latest)](https://hub.docker.com/r/weejewel/wg-easy)
-[![Docker](https://img.shields.io/docker/pulls/weejewel/wg-easy.svg)](https://hub.docker.com/r/weejewel/wg-easy)
-[![Sponsor](https://img.shields.io/github/sponsors/weejewel)](https://github.com/sponsors/WeeJeWel)
+[![Lint](https://github.com/FuzzyMistborn/wg-easy/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/FuzzyMistborn/wg-easy/actions/workflows/lint.yml)
+[![Docker](https://img.shields.io/docker/v/fuzzymistborn/wg-easy/latest)](https://hub.docker.com/r/fuzzymistborn/wg-easy)
+[![Docker](https://img.shields.io/docker/pulls/fuzzymistborn/wg-easy.svg)](https://hub.docker.com/r/fuzzymistborn/wg-easy)
 
 You have found the easiest way to install & manage WireGuard on any Linux host!
+
+Forked from the original repo because of [this issue](https://github.com/WeeJeWel/wg-easy/issues/56).  I didn't want to get daily image update notifications when nothing changed.  I've enabled dependabot as well.
 
 <p align="center">
   <img src="./assets/screenshot.png" width="702" />
