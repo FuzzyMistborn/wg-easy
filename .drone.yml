@@ -101,8 +101,8 @@ type: docker
 name: Docker Build (stable release)
 
 trigger:
-  event:
-    - tag
+  ref:
+    - refs/tags/**
 
 steps:
 - name: DockerHub
