@@ -1,9 +1,9 @@
 kind: pipeline
 type: docker
-name: Docker Build
+name: Docker Build (latest)
 
 steps:
-- name: DockerHub (latest)
+- name: DockerHub
   image: plugins/docker
   settings:
     username: fuzzymistborn
@@ -17,7 +17,7 @@ steps:
     cron:
     - weekly
 
-- name: GH Container Registry (latest)
+- name: GH Container Registry
   image: plugins/docker
   settings:
     username: fuzzymistborn
@@ -31,60 +31,6 @@ steps:
     - cron
     cron:
     - weekly
-
-- name: DockerHub (stable cron)
-  image: plugins/docker
-  settings:
-    username: fuzzymistborn
-    password:
-      from_secret: dockerhub_pw
-    repo: fuzzymistborn/wg-easy
-    tags: stable
-  when:
-    event:
-    - cron
-    cron:
-    - monthly
-
-- name: GH Container Registry (stable cron)
-  image: plugins/docker
-  settings:
-    username: fuzzymistborn
-    password:
-      from_secret: ghcr_pw
-    repo: ghcr.io/fuzzymistborn/wg-easy
-    registry: ghcr.io
-    tags: stable
-  when:
-    event:
-    - cron
-    cron:
-    - monthly
-    
-- name: DockerHub (stable release)
-  image: plugins/docker
-  settings:
-    username: fuzzymistborn
-    password:
-      from_secret: dockerhub_pw
-    repo: fuzzymistborn/wg-easy
-    tags: stable
-  when:
-    event:
-    - tag
-
-- name: GH Container Registry (stable release)
-  image: plugins/docker
-  settings:
-    username: fuzzymistborn
-    password:
-      from_secret: ghcr_pw
-    repo: ghcr.io/fuzzymistborn/wg-easy
-    registry: ghcr.io
-    tags: stable
-  when:
-    event:
-    - tag
 
 - name: Send TG Notification
   image: appleboy/drone-telegram
@@ -96,10 +42,110 @@ steps:
     format: markdown
     message: >
       {{#success build.status}}
-        ✅  Build for `{{repo.name}}` was *successful*!
+        ✅  Build for `{{repo.name}}` for `latest-release` was *successful*!
         🌐  [Output]({{build.link}})
       {{else}}
-        ❌  Build for `{{repo.name}}` has *FAILED*!
+        ❌  Build for `{{repo.name}}` for `lateset-release` has *FAILED*!
+        🌐  [Output]({{build.link}})
+      {{/success}}
+  when:
+    status: [ success, failure ]
+    
+kind: pipeline
+type: docker
+name: Docker Build (stable cron)
+    
+- name: DockerHub
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: dockerhub_pw
+    repo: fuzzymistborn/wg-easy
+    tags: stable
+  when:
+    event:
+    - cron
+    cron:
+    - monthly
+
+- name: GH Container Registry
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: ghcr_pw
+    repo: ghcr.io/fuzzymistborn/wg-easy
+    registry: ghcr.io
+    tags: stable
+  when:
+    event:
+    - cron
+    cron:
+    - monthly
+
+- name: Send TG Notification
+  image: appleboy/drone-telegram
+  settings:
+    token:
+      from_secret: tg_token
+    to:
+      from_secret: tg_id
+    format: markdown
+    message: >
+      {{#success build.status}}
+        ✅  Build for `{{repo.name}}` for `stable-cron` was *successful*!
+        🌐  [Output]({{build.link}})
+      {{else}}
+        ❌  Build for `{{repo.name}}` for `stable-cron` has *FAILED*!
+        🌐  [Output]({{build.link}})
+      {{/success}}
+  when:
+    status: [ success, failure ]
+    
+kind: pipeline
+type: docker
+name: Docker Build (stable release)
+    
+- name: DockerHub
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: dockerhub_pw
+    repo: fuzzymistborn/wg-easy
+    tags: stable
+  when:
+    ref:
+    - refs/tags/*
+
+- name: GH Container Registry
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: ghcr_pw
+    repo: ghcr.io/fuzzymistborn/wg-easy
+    registry: ghcr.io
+    tags: stable
+  when:
+    ref:
+    - refs/tags/*
+
+- name: Send TG Notification
+  image: appleboy/drone-telegram
+  settings:
+    token:
+      from_secret: tg_token
+    to:
+      from_secret: tg_id
+    format: markdown
+    message: >
+      {{#success build.status}}
+        ✅  Build for `{{repo.name}}` for `stable-release` was *successful*!
+        🌐  [Output]({{build.link}})
+      {{else}}
+        ❌  Build for `{{repo.name}}` for `stable-release` has *FAILED*!
         🌐  [Output]({{build.link}})
       {{/success}}
   when:
