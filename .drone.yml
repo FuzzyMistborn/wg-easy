@@ -1,0 +1,106 @@
+kind: pipeline
+type: docker
+name: Docker Build
+
+steps:
+- name: DockerHub (latest)
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: dockerhub_pw
+    repo: fuzzymistborn/wg-easy
+    tags: latest
+  when:
+    event:
+    - cron
+    cron:
+    - weekly
+
+- name: GH Container Registry (latest)
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: ghcr_pw
+    repo: ghcr.io/fuzzymistborn/wg-easy
+    registry: ghcr.io
+    tags: latest
+  when:
+    event:
+    - cron
+    cron:
+    - weekly
+
+- name: DockerHub (stable cron)
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: dockerhub_pw
+    repo: fuzzymistborn/wg-easy
+    tags: stable
+  when:
+    event:
+    - cron
+    cron:
+    - monthly
+
+- name: GH Container Registry (stable cron)
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: ghcr_pw
+    repo: ghcr.io/fuzzymistborn/wg-easy
+    registry: ghcr.io
+    tags: stable
+  when:
+    event:
+    - cron
+    cron:
+    - monthly
+    
+- name: DockerHub (stable release)
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: dockerhub_pw
+    repo: fuzzymistborn/wg-easy
+    tags: stable
+  when:
+    event:
+    - tag
+
+- name: GH Container Registry (stable release)
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: ghcr_pw
+    repo: ghcr.io/fuzzymistborn/wg-easy
+    registry: ghcr.io
+    tags: stable
+  when:
+    event:
+    - tag
+
+- name: Send TG Notification
+  image: appleboy/drone-telegram
+  settings:
+    token:
+      from_secret: tg_token
+    to:
+      from_secret: tg_id
+    format: markdown
+    message: >
+      {{#success build.status}}
+        ✅  Build for `{{repo.name}}` was *successful*!
+        🌐  [Output]({{build.link}})
+      {{else}}
+        ❌  Build for `{{repo.name}}` has *FAILED*!
+        🌐  [Output]({{build.link}})
+      {{/success}}
+  when:
+    status: [ success, failure ]
