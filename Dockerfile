@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:17-alpine
 
 # Install Linux packages
 RUN apk add -U --no-cache wireguard-tools dumb-init
