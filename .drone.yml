@@ -2,6 +2,12 @@ kind: pipeline
 type: docker
 name: Docker Build (latest)
 
+trigger:
+  event:
+  - cron
+  cron:
+  - weekly
+
 steps:
 - name: DockerHub
   image: plugins/docker
@@ -11,11 +17,6 @@ steps:
       from_secret: dockerhub_pw
     repo: fuzzymistborn/wg-easy
     tags: latest
-  when:
-    event:
-    - cron
-    cron:
-    - weekly
 
 - name: GH Container Registry
   image: plugins/docker
@@ -26,11 +27,6 @@ steps:
     repo: ghcr.io/fuzzymistborn/wg-easy
     registry: ghcr.io
     tags: latest
-  when:
-    event:
-    - cron
-    cron:
-    - weekly
 
 - name: Send TG Notification
   image: appleboy/drone-telegram
@@ -55,6 +51,12 @@ kind: pipeline
 type: docker
 name: Docker Build (stable cron)
 
+trigger:
+  event:
+  - cron
+  cron:
+  - monthly
+
 steps:
 - name: DockerHub
   image: plugins/docker
@@ -64,11 +66,6 @@ steps:
       from_secret: dockerhub_pw
     repo: fuzzymistborn/wg-easy
     tags: stable
-  when:
-    event:
-    - cron
-    cron:
-    - monthly
 
 - name: GH Container Registry
   image: plugins/docker
@@ -79,11 +76,6 @@ steps:
     repo: ghcr.io/fuzzymistborn/wg-easy
     registry: ghcr.io
     tags: stable
-  when:
-    event:
-    - cron
-    cron:
-    - monthly
 
 - name: Send TG Notification
   image: appleboy/drone-telegram
@@ -108,6 +100,10 @@ kind: pipeline
 type: docker
 name: Docker Build (stable release)
 
+trigger:
+  event:
+  - tag
+
 steps:
 - name: DockerHub
   image: plugins/docker
@@ -117,9 +113,7 @@ steps:
       from_secret: dockerhub_pw
     repo: fuzzymistborn/wg-easy
     tags: stable
-  when:
-    ref:
-    - refs/tags/*
+
 
 - name: GH Container Registry
   image: plugins/docker
@@ -130,9 +124,6 @@ steps:
     repo: ghcr.io/fuzzymistborn/wg-easy
     registry: ghcr.io
     tags: stable
-  when:
-    ref:
-    - refs/tags/*
 
 - name: Send TG Notification
   image: appleboy/drone-telegram
