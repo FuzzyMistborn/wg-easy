@@ -55,6 +55,7 @@ kind: pipeline
 type: docker
 name: Docker Build (stable cron)
 
+steps:
 - name: DockerHub
   image: plugins/docker
   settings:
@@ -106,7 +107,8 @@ name: Docker Build (stable cron)
 kind: pipeline
 type: docker
 name: Docker Build (stable release)
-    
+
+steps:
 - name: DockerHub
   image: plugins/docker
   settings:
