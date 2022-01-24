@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-FROM node:16-alpine
-=======
 # There's an issue with node:16-alpine.
 # On Raspberry Pi, the following crash happens:
->>>>>>> upstream/master
 
 # #FailureMessage Object: 0x7e87753c
 # #
