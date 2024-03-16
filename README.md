@@ -9,7 +9,8 @@
 
 You have found the easiest way to install & manage WireGuard on any Linux host!
 
-Forked from the original repo because of [this issue](https://github.com/WeeJeWel/wg-easy/issues/56).  I didn't want to get daily image update notifications when nothing changed.  I've enabled dependabot as well.
+~~Forked from the original repo because of [this issue](https://github.com/WeeJeWel/wg-easy/issues/56).  I didn't want to get daily image update notifications when nothing changed.  I've enabled dependabot as well.~~
+## Archived!  Looks like development has gone in a new direction on the main repo and there's now version tags to pin to!  So this image is no longer needed.
 
 <p align="center">
   <img src="./assets/screenshot.png" width="802" />
